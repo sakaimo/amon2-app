@@ -4,4 +4,41 @@
 
 <h1 style="padding: 70px; text-align: center; font-size: 80px; line-height: 1; letter-spacing: -2px;">Scheduler</h1>
 
+<hr />
+
+<form class="form-inline" method="POST" action="<: uri_for('/post') :>">
+    <div class="form-group">
+        <label>タイトル</label>
+        <input type="text" class="form-control" name="title" placeholder="例: Perlの勉強">
+    </div>
+    <div class="form-group">
+        <label>日付</label>
+        <input type="text" class="form-control" name="date" placeholder="例: 2015/03/10">
+    </div>
+    <button type="submit" class="btn btn-default">登録</button>
+</form>
+
+<hr />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>タイトル</th>
+            <th>日時</th>
+        </tr>
+    </thead>
+    <tbody>
+    : for $schedules -> $schedule {
+        <tr>
+            <td><: $schedule.title :></td>
+            <td><: $schedule.date.strftime("%Y/%m/%d") :></td>
+            <td>
+                <form method="POST" action="<: uri_for('/schedules/'~$schedule.id~'/delete') :>">
+                    <button type="submit" class="btn btn-danger">削除</button>
+                </form>
+            </td>
+        </tr>
+    : }
+    </tbody>
+</table>
 : }
