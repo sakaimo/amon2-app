@@ -1,0 +1,9 @@
+: cascade "include/layout.tx"
+
+: override content -> {
+
+<p><: $name :></p>
+<p><: $age :></p>
+<p><: $address :></p>
+
+: }
