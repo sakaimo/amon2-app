@@ -1,0 +1,26 @@
+- name: check whether git is installed
+  shell: git --version
+  register: result
+  ignore_errors: True
+
+- debug: var=result.rc
+          
+- name: Install dependency lib for git
+  yum: name={{ item }} state=present
+  with_items:
+    - curl-devel
+    - expat-devel
+    - gettext-devel
+    - openssl-devel
+    - zlib-devel
+    - perl-ExtUtils-MakeMaker
+  when: result.rc != 0
+
+- name: install git2.7.0
+  shell: |
+    wget https://www.kernel.org/pub/software/scm/git/git-2.7.0.tar.gz
+    tar zxvf git-2.7.0.tar.gz
+    cd git-2.7.0
+    make prefix=/usr/local all
+    make prefix=/usr/local install
+  when: result.rc != 0

@@ -1,0 +1,7 @@
+- name: check ip address
+  shell: ifconfig eth0 | grep inet
+  register: result
+
+- name: ifconfig eth0 | grep inet
+  debug: var=result.stdout_lines
+  when: result | success

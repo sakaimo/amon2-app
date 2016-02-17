@@ -1,0 +1,45 @@
+# TODO：homepageユーザー作成および、そのユーザーでの環境構築
+#- name: add homepage user
+#  user: name=homepage state=present comment="for amon2-app execute"
+
+# 変数読み込み(../vars にある)
+- name: include vars
+  include_vars: vars.yml
+
+- name: mkdir homepage
+  file: path={{ home_dir }} state=directory
+
+- name: check whether perl is installed
+  shell: |
+    cd {{ home_dir }}
+    perl -v
+  register: perl_version
+
+# plenv
+- name: clone plenv
+  git: repo=git://github.com/tokuhirom/plenv.git
+       dest=~/.plenv
+       accept_hostkey=yes
+
+- name: clone Perl-Build
+  git: repo=git://github.com/tokuhirom/Perl-Build.git
+       dest=~/.plenv/plugins/perl-build/
+       accept_hostkey=yes
+
+- name: set path to bash_profile
+  shell: |
+    echo 'export PATH="$HOME/.plenv/bin:$PATH"' >> ~/.bash_profile
+    echo 'eval "$(plenv init -)"' >> ~/.bash_profile
+
+# perl
+- name: install perl 5.20.2
+  shell: |
+    cd {{ home_dir }}
+    plenv install 5.20.2
+    plenv global 5.20.2
+  when: perl_version.stdout_lines[1].find('5.20.2') == -1
+
+# cpanm
+- name: install cpanm
+  shell: plenv install-cpanm chdir={{ home_dir }}
+

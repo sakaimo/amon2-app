@@ -1,0 +1,10 @@
+- name: install some modules
+  yum: name={{ item }} state=present
+  with_items:
+    - tar
+    - gcc
+    - patch
+    - which
+    - openssh-clients
+    - sudo
+    - tree

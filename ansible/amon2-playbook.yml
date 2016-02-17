@@ -1,0 +1,15 @@
+- hosts: app
+  gather_facts: no
+  remote_user: root
+  roles:
+    - test
+    - modules
+    - git
+    #- vim #未完成
+
+- hosts: app
+  gather_facts: no
+  remote_user: root #ここをhomepageにしたい
+  roles:
+    - perl_environment
+

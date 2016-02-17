@@ -1,0 +1,23 @@
+- name: check vim is installed
+  shell: vim --version
+  register: result
+  ignore_errors: True
+
+- name: Install dependency lib for vim
+  yum: name={{ item }} state=present
+  with_items:
+    - mercurial
+    - ncurses-devel
+    - make
+    - gcc
+  when: result.rc != '0'
+
+#すでにインストールされているときにここでエラになる　stderr: abort: destination 'vim' is not empty
+- shell: >
+    cd /usr/local/src &&
+    hg clone https://bitbucket.org/vim-mirror/vim vim &&
+    cd vim &&
+    ./configure --with-features=huge --enable-multibyte --disable-selinux &&
+    make &&
+    make install
+  when: result.rc != '0'
