@@ -3,7 +3,6 @@ use strict;
 use warnings;
 use utf8;
 use Amon2::Web::Dispatcher::RouterBoom;
-
 use Time::Piece;
 
 get '/' => sub {
