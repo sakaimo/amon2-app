@@ -6,6 +6,11 @@ use Plack::Test;
 use Plack::Util;
 use Test::More;
 
+subtest '失敗するテスト' => sub {
+    is 'aaa', 'bbb';
+};
+
+
 my $app = Plack::Util::load_psgi 'script/scheduler-server';
 test_psgi
     app => $app,
