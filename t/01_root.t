@@ -6,7 +6,7 @@ use Plack::Test;
 use Plack::Util;
 use Test::More;
 
-subtest '失敗するテスト' => sub {
+subtest 'this is a failed test' => sub {
     is 'aaa', 'bbb';
 };
 
