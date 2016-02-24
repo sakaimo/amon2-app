@@ -16,5 +16,5 @@
 - hosts: app
   gather_facts: no
   remote_user: root
-  role:
+  roles:
     - clone_amon2-app
