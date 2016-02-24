@@ -13,3 +13,8 @@
   roles:
     - perl_environment
 
+- hosts: app
+  gather_facts: no
+  remote_user: root
+  role:
+    - clone_amon2-app
